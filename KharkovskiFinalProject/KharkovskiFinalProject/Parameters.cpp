@@ -28,6 +28,8 @@ public:
 		return importanceLevelMap.at(i);
 	};
 
+	
+
 	double getParameter(char type) {
 		return paramMap.at(type);
 	};

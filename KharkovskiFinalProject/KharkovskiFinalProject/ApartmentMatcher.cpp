@@ -45,22 +45,14 @@ const double SCORE_MULTIPLIER = 1.05;
 
 vector<Apartment*> createSampleApartments() {
 
-    Apartment apartment1 = Apartment("alpha", 900, 1500, 15, 90);
-    Apartment apartment2 = Apartment("bravo", 600, 800, 10, 85);
-    Apartment apartment3 = Apartment("chalie", 500, 1300, 1, 70);
-
-    Apartment apartment4 = Apartment("delta", 700, 1100, 8, 95);
-    Apartment apartment5 = Apartment("echo", 650, 870, 12, 81);
-    Apartment apartment6 = Apartment("foxtrot", 400, 900, 2, 76);
-
     vector<Apartment*> a;
 
-    a.push_back(&apartment1);
-    a.push_back(&apartment2);
-    a.push_back(&apartment3);
-    a.push_back(&apartment4);
-    a.push_back(&apartment5);
-    a.push_back(&apartment6);
+    a.push_back(new Apartment("alpha", 900, 1500, 15, 90));
+    a.push_back(new Apartment("bravo", 900, 1500, 15, 90));
+    a.push_back(new Apartment("chalie", 900, 1500, 15, 90));
+    a.push_back(new Apartment("delta", 900, 1000, 15, 90));
+    a.push_back(new Apartment("echo", 900, 1500, 15, 90));
+    a.push_back(new Apartment("foxtrot", 900, 1500, 15, 90));
 
     return a;
 }
@@ -174,7 +166,7 @@ vector<Apartment*> createSampleApartments() {
 //
 
 // function tha assists in sort algorithm
-bool sortByVal(const pair<Apartment*, double>& a, const pair<Apartment*, double>& b){
+bool compareDifference(const pair<Apartment*, double>& a, const pair<Apartment*, double>& b){
     return (a.second < b.second);
 }
 
@@ -339,33 +331,32 @@ bool sortByVal(const pair<Apartment*, double>& a, const pair<Apartment*, double>
 //}
 
 // 
-void checkParams(vector<Apartment*> &a, Parameter p, double importanceCoefficient, char paramMarker) {
+void checkParams(vector<Apartment*> &a, Parameter &p, double importanceCoefficient, char paramMarker) {
     cout << '\n' << "Checking parameters..." << '\n';
 
     // initializes map for holding differences
-    // change string below to pointer to an apartment
     map<Apartment*, double> differenceMap;
     // loops thru and adds apartment with its difference to the map
    
     switch (paramMarker) {
     case 'f':
         for (int i = 0; i < a.size(); i++) {
-            differenceMap.insert(pair<Apartment*, double>(a[i], abs(a[i]->getFootage() - p.getParameter(paramMarker))));
+            differenceMap.insert(pair<Apartment*, double>(a.at(i), abs(a.at(i)->getFootage() - p.getParameter(paramMarker))));
         }
         break;
     case 'c':
         for (int i = 0; i < a.size(); i++) {
-            differenceMap.insert(pair<Apartment*, double>(a[i], abs(a[i]->getCost() - p.getParameter(paramMarker))));
+            differenceMap.insert(pair<Apartment*, double>(a.at(i), abs(a.at(i)->getCost() - p.getParameter(paramMarker))));
         }
         break;
     case 'd':
         for (int i = 0; i < a.size(); i++) {
-            differenceMap.insert(pair<Apartment*, double>(a[i], abs(a[i]->getDistance() - p.getParameter(paramMarker))));
+            differenceMap.insert(pair<Apartment*, double>(a.at(i), abs(a.at(i)->getDistance() - p.getParameter(paramMarker))));
         }
         break;
     case 'g':
         for (int i = 0; i < a.size(); i++) {
-            differenceMap.insert(pair<Apartment*, double>(a[i], abs(a[i]->getGrade() - p.getParameter(paramMarker))));
+            differenceMap.insert(pair<Apartment*, double>(a.at(i), abs(a.at(i)->getGrade() - p.getParameter(paramMarker))));
         }
         break;
     }
@@ -379,7 +370,7 @@ void checkParams(vector<Apartment*> &a, Parameter p, double importanceCoefficien
         vecDiffMap.push_back(make_pair(it2->first, it2->second));
     }
     // sorts the vector of differences
-    sort(vecDiffMap.begin(), vecDiffMap.end(), sortByVal);
+    sort(vecDiffMap.begin(), vecDiffMap.end(), compareDifference);
 
     // simple display 
     //for (int i = 0; i < vecDiffMap.size(); i++) {
@@ -390,35 +381,39 @@ void checkParams(vector<Apartment*> &a, Parameter p, double importanceCoefficien
     // outer loops goes thru vecDiffMap values
     for (int i = 0; i < vecDiffMap.size(); i++) {
         // inner loops used to go thru apartment list to compare values
-        for (int j = 0; j < a->size(); j++) {
-            if (vecDiffMap[i].first == a[j]) {
-                a[j]->addToMatchScore((i * SCORE_MULTIPLIER) * (10.0 * importanceCoefficient));
-                cout << "Apartment " << a[j]->getName() << " match score: " << a[j]->getMatchScore() << '\n';
+        for (int j = 0; j < a.size(); j++) {
+            if (vecDiffMap[i].first == a.at(j)) {
+                if (vecDiffMap[i].second == 0) {
+                    a.at(j)->addToMatchScore(0);
+                }
+                else {
+                    a.at(j)->addToMatchScore((i * SCORE_MULTIPLIER) * (10.0 * importanceCoefficient));
+                }
+ //               a.at(j)->addToMatchScore((i * SCORE_MULTIPLIER) * (10.0 * importanceCoefficient));
+                cout << "Apartment " << a.at(j)->getName() << " match score: " << a.at(j)->getMatchScore() << '\n';
             }
         }
     }
 }
 
-void criteriaChecker(vector<Apartment*> *a, Parameter p) {
-    // hold list of sorted apartments by best option
-   //  vector<Apartment> sortedApartments;
+void criteriaChecker(vector<Apartment*> &a, Parameter &p) {
     
     for (double i = 1; i <= p.getImportanceMapSize(); i++) {
         switch (p.getImportanceParam(i)) {
         case 'f':
-            checkParams(*a, p, i, 'f');
+            checkParams(a, p, 1/i, 'f');
             //checkFootage(a, p, i);
             break;
         case 'c':
-            checkParams(*a, p, i, 'c');
+            checkParams(a, p, 1/i, 'c');
             //checkCost(a, p, i);
             break;
         case 'd':
-            checkParams(*a, p, i, 'd');
+            checkParams(a, p, 1/i, 'd');
             //checkDistance(a, p, i);
             break;
         case 'g':
-            checkParams(*a, p, i, 'g');
+            checkParams(a, p, 1/i, 'g');
             //checkGrade(a, p, i);
             break;
         }
@@ -432,6 +427,15 @@ void displayApartments(vector<Apartment*> a) {
     }
 }
 
+
+
+// function to accept unsorted apartment list and sort that list by match score
+void sortApartments(vector<Apartment*> &unsortedA) {
+    // write code to BUBBLE sort vector by match score here
+
+
+}
+
 int main() {
 
 //    menuNav();
@@ -441,10 +445,14 @@ int main() {
     newSpecs.loadDefaultParameters();
     newSpecs.loadDefaultImportanceLevel();
 
- //   displayApartments(apartments);
+    displayApartments(apartments);
+    
     newSpecs.displayParameters();
     cout << "_____________________________" << '\n' << '\n';
 
-    criteriaChecker(&apartments, newSpecs);
-    
+    criteriaChecker(apartments, newSpecs);
+
+    sortApartments(apartments);
+
+    displayApartments(apartments);
 }
