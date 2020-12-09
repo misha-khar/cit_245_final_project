@@ -7,6 +7,8 @@ resources:
 sorting code from:
 https://www.educative.io/edpresso/how-to-sort-a-map-by-value-in-cpp
 
+bubble sort help:
+https://stackoverflow.com/questions/18838742/bubblesort-vector
 
 */
 
@@ -26,312 +28,77 @@ using namespace std;
 // vector<Apartment> apartments;
 
 char paramTypes[4] = { 'f', 'c', 'd', 'g' };
-const double SCORE_MULTIPLIER = 1.05;
-
-// function to create sample apartments
-// maybe add option of chooseing b/w pre-selected and user defined options?
-//void createSampleApartments(vector<Apartment> a) {
-//
-//    // figure out how to retrurn pointer here
-//
-//    Apartment* apartment1 = new Apartment("alpha", 900, 1500, 15, 90);
-//    apartments.push_back(*apartment1);
-//    Apartment* apartment2 = new Apartment("bravo", 600, 800, 10, 85);
-//    apartments.push_back(*apartment2);
-//    Apartment* apartment3 = new Apartment("chalie", 500, 1300, 1, 70);
-//    apartments.push_back(*apartment3);
-//
-//}
+// const double SCORE_MULTIPLIER = 1.05;
 
 vector<Apartment*> createSampleApartments() {
 
     vector<Apartment*> a;
 
-    a.push_back(new Apartment("alpha", 900, 1500, 15, 90));
-    a.push_back(new Apartment("bravo", 900, 1500, 15, 90));
-    a.push_back(new Apartment("chalie", 900, 1500, 15, 90));
-    a.push_back(new Apartment("delta", 900, 1000, 15, 90));
-    a.push_back(new Apartment("echo", 900, 1500, 15, 90));
-    a.push_back(new Apartment("foxtrot", 900, 1500, 15, 90));
+    a.push_back(new Apartment("alpha", 850, 1500, 15, 90));
+    a.push_back(new Apartment("bravo", 900, 1500, 5, 85));
+    a.push_back(new Apartment("chalie", 700, 1000, 10, 60));
+    a.push_back(new Apartment("delta", 900, 1000, 20, 80));
+    a.push_back(new Apartment("echo", 600, 850, 12, 95));
+    a.push_back(new Apartment("foxtrot", 900, 1500, 3, 98));
 
     return a;
 }
 
-//void doesItMeetCriteria3_0(vector<Apartment> options) {
-//
-//    for (int i = 0; i < apartments.size(); i++) {
-//        if (apartments[i].criteriaTester('f', newSpecs.getFootageSpec(), newSpecs.getOverUnderMap("footage")) &&
-//            apartments[i].criteriaTester('c', newSpecs.getCostSpec(), newSpecs.getOverUnderMap("cost")) &&
-//            apartments[i].criteriaTester('d', newSpecs.getDistanceSpec(), newSpecs.getOverUnderMap("distance")) &&
-//            apartments[i].criteriaTester(newSpecs.getGradeSpec(), newSpecs.getOverUnderMap("grade"))) {
-//            cout << '\n' << "Apartment " << apartments[i].getName() << " meets all criteria. " << '\n';
-//        }
-//    }
-//
-//}
-//
-//// function to tes user input and make sure it is valid
-//bool menuOptionCheck(char input) {
-//    // char array that stores valid menu options
-//    char validMenuOptions[] = { 'I', 'P', 'D', 'S', 'U', 'M', 'E' };
-//    // loops through array of validMenuOptions and compares user input against validMenuOptions
-//    for (int i = 0; i < sizeof(validMenuOptions); i = i + 1) {
-//        // if the user input matches one of the acceptable options, returns true
-//        if (input == validMenuOptions[i]) {
-//            return true;
-//        }
-//    }
-//    return false;
-//}
-//
-//void quickLoadData() {
-////    map<string, bool> overUnderMap;
-//    overUnderMap.insert(pair<string, bool>("f", 1));
-//    overUnderMap.insert(pair<string, bool>("c", 1));
-//    overUnderMap.insert(pair<string, bool>("d", 1));
-//    overUnderMap.insert(pair<string, bool>("g", 1));
-//    UserSpecs specs2(100, 100, 1, 50, overUnderMap);
-//    createSampleApartments();
-//}
-//
-//void menuNav() {
-//    // variable to store user input
-//    char input;
-//    do {
-//        do {
-//            cout << "_____________________________________________" << '\n';
-//            cout << "|                                           |" << '\n';
-//            cout << "|----------------Dumb Zillow----------------|" << '\n';
-//            cout << "|------------------ MENU -------------------|" << '\n';
-//            cout << "| Type 'I' to quick load data       |" << '\n';
-//            cout << "| Type 'P' to use pre-existing apartments   | " << '\n';
-//            cout << "| Type 'D' to display all apartment options |" << '\n';
-//            cout << "| Type 'U' to input search parameters       |" << '\n';
-//            cout << "| Type 'S' to display search parameters     |" << '\n';
-//            cout << "| Type 'M' to find potential matches        |" << '\n';
-//            cout << "| Type 'E' to exit the program              |" << '\n';
-//            cout << "|___________________________________________|" << '\n' << '\n';
-//            cout << "PLease enter a menu option: ";
-//            cin >> input;
-//            // converts user input to uppercase for consistent testing
-//            input = toupper(input);
-//            // selects proper menu option based on user input
-//            switch (input) {
-//            case 'I':
-//                cout << "You selected quick load data" << '\n';
-//
-//                quickLoadData();
-//
-//                
-//
-//
-//
-//                break;
-//            case 'P':
-//                cout << "You selected use pre-existing apartments" << '\n';
-//                cout << "Loading pre-existing apartments...";
-//                createSampleApartments();
-//                cout << "Loaded" << '\n';
-//                break;
-//            case 'D':
-//                cout << "You selected show all apartment options" << '\n';
-//                displayAllApartments();
-//                break;
-//            case 'U':
-//                cout << "You selected input new search parameters" << '\n';
-//             
-//                newSpecs.requestUserSpecs();
-//                break;
-//            case 'S':
-//                cout << "You selected show search parameters" << '\n';
-//                newSpecs.displayUserSpecs();
-//                break;
-//            case 'M':
-//                cout << "You selected find potetial matches" << '\n';
-//                cout << "Searching for potential matches..." << '\n';
-//                doesItMeetCriteria3_0(apartments);
-//                break;
-//            case 'E':
-//                cout << "You selected exit" << '\n';
-//                break;
-//            default:
-//                cout << "Please enter a valid menu option " << '\n';
-//            }
-//            // tests input to make sure user inputs a valid menu option
-//        } while (!menuOptionCheck(input));
-//        // tests input and only exits the program if user selects exit
-//    } while (input != 'E');
-//    cout << '\n' << "Ending program..." << '\n';
-//}
-//
+Parameter createDefaultParams() {
+    Parameter p = Parameter(900,1, 1500,2, 15,3, 90, 4);
+    return p;
+}
+
+Parameter createCustomParams() {
+    double f, c, d, g;
+    int fi, ci, di, gi;
+    cout << "Please enter a target square footage: ";
+    cin >> f;
+    cout << "Please enter an importance level for footage (1-4, 1 being most important): ";
+    cin >> fi;
+
+    cout << "Please enter a target cost: ";
+    cin >> c;
+    cout << "Please enter an importance level for cost (1-4, 1 being most important): ";
+    cin >> ci;
+
+    cout << "Please enter a target distance to city: ";
+    cin >> d;
+    cout << "Please enter an importance level for distance (1-4, 1 being most important): ";
+    cin >> di;
+
+    cout << "Please enter a target neighborhood grade: ";
+    cin >> g;
+    cout << "Please enter an importance level for neighborhood grade (1-4, 1 being most important): ";
+    cin >> gi;
+    
+    
+    Parameter p = Parameter(f, fi, c, ci, d, di, g, gi);
+    return p;
+}
+
+// function to tes user input and make sure it is valid
+bool menuOptionCheck(char input) {
+    // char array that stores valid menu options
+    char validMenuOptions[] = { 'Q', 'D', 'S', 'U', 'M', 'E' };
+    // loops through array of validMenuOptions and compares user input against validMenuOptions
+    for (int i = 0; i < sizeof(validMenuOptions); i = i + 1) {
+        // if the user input matches one of the acceptable options, returns true
+        if (input == validMenuOptions[i]) {
+            return true;
+        }
+    }
+    return false;
+}
 
 // function tha assists in sort algorithm
 bool compareDifference(const pair<Apartment*, double>& a, const pair<Apartment*, double>& b){
     return (a.second < b.second);
 }
 
-// may not need all code below
-//void checkFootage(vector<Apartment> a, Parameter p, int importanceCoefficient) {
-//    cout << '\n' << "Checking footage..." << '\n';
-//
-//    // initializes map for holding differences
-//    map<string, double> differenceMap;
-//    // loops thru and adds apartment with its difference to the map
-//    for (int i = 0; i < a.size(); i++) {
-//        differenceMap.insert(pair<string, double>(a[i].getName(), abs(a[i].getFootage() - p.getParameter('f'))));
-//    }
-//
-//    // needed to be a vector type for sorting algorithm
-//    vector<pair<string, double>> vecDiffMap;
-//    map<string, double> ::iterator it2;
-//    // transfers each element of diffMap to a vector of the same contents
-//    for (it2 = differenceMap.begin(); it2 != differenceMap.end(); it2++)
-//    {
-//        vecDiffMap.push_back(make_pair(it2->first, it2->second));
-//    }
-//    // sorts the vector of differences
-//    sort(vecDiffMap.begin(), vecDiffMap.end(), sortByVal);
-//
-//    // simple display 
-//    //for (int i = 0; i < vecDiffMap.size(); i++) {
-//    //    cout << vecDiffMap[i].first << ": " << vecDiffMap[i].second << '\n';
-//    //}
-//
-//    // loops thru vecDiffMap and adds points appropriately
-//    // outer loops goes thru vecDiffMap values
-//    for (int i = 0; i < vecDiffMap.size(); i++) {
-//        // inner loops used to go thru apartment list to compare values
-//        for (int j = 0; j < a.size(); j++) {
-//            if (vecDiffMap[i].first == a[j].getName()) {
-//                a[j].addToMatchScore((i * SCORE_MULTIPLIER)*(10*importanceCoefficient));
-//                cout << "Apartment " << a[j].getName() << " match score: " << a[j].getMatchScore() << '\n';
-//            }
-//        }
-//    }
-//
-//}
-//
-//void checkCost(vector<Apartment> a, Parameter p, int importanceCoefficient) {
-//    cout << '\n' << "Checking cost..." << '\n';
-//
-//    // initializes map for holding differences
-//    map<string, double> differenceMap;
-//    // loops thru and adds apartment with its difference to the map
-//    for (int i = 0; i < a.size(); i++) {
-//        differenceMap.insert(pair<string, double>(a[i].getName(), abs(a[i].getCost() - p.getParameter('c'))));
-//    }
-//
-//    // needed to be a vector type for sorting algorithm
-//    vector<pair<string, double>> vecDiffMap;
-//    map<string, double> ::iterator it2;
-//    // transfers each element of diffMap to a vector of the same contents
-//    for (it2 = differenceMap.begin(); it2 != differenceMap.end(); it2++)
-//    {
-//        vecDiffMap.push_back(make_pair(it2->first, it2->second));
-//    }
-//    // sorts the vector of differences
-//    sort(vecDiffMap.begin(), vecDiffMap.end(), sortByVal);
-//
-//    // simple display 
-//    //for (int i = 0; i < vecDiffMap.size(); i++) {
-//    //    cout << vecDiffMap[i].first << ": " << vecDiffMap[i].second << '\n';
-//    //}
-//
-//    // loops thru vecDiffMap and adds points appropriately
-//    // outer loops goes thru vecDiffMap values
-//    for (int i = 0; i < vecDiffMap.size(); i++) {
-//        // inner loops used to go thru apartment list to compare values
-//        for (int j = 0; j < a.size(); j++) {
-//            if (vecDiffMap[i].first == a[j].getName()) {
-//                a[j].addToMatchScore((i * SCORE_MULTIPLIER) * (10 * importanceCoefficient));
-//                cout << "Apartment " << a[j].getName() << " match score: " << a[j].getMatchScore() << '\n';
-//            }
-//        }
-//    }
-//
-//}
-//
-//void checkDistance(vector<Apartment> a, Parameter p, int importanceCoefficient) {
-//    cout << '\n' << "Checking distance..." << '\n';
-//
-//    // initializes map for holding differences
-//    map<string, double> differenceMap;
-//    // loops thru and adds apartment with its difference to the map
-//    for (int i = 0; i < a.size(); i++) {
-//        differenceMap.insert(pair<string, double>(a[i].getName(), abs(a[i].getDistance() - p.getParameter('d'))));
-//    }
-//
-//    // needed to be a vector type for sorting algorithm
-//    vector<pair<string, double>> vecDiffMap;
-//    map<string, double> ::iterator it2;
-//    // transfers each element of diffMap to a vector of the same contents
-//    for (it2 = differenceMap.begin(); it2 != differenceMap.end(); it2++)
-//    {
-//        vecDiffMap.push_back(make_pair(it2->first, it2->second));
-//    }
-//    // sorts the vector of differences
-//    sort(vecDiffMap.begin(), vecDiffMap.end(), sortByVal);
-//
-//    // simple display 
-//    //for (int i = 0; i < vecDiffMap.size(); i++) {
-//    //    cout << vecDiffMap[i].first << ": " << vecDiffMap[i].second << '\n';
-//    //}
-//
-//    // loops thru vecDiffMap and adds points appropriately
-//    // outer loops goes thru vecDiffMap values
-//    for (int i = 0; i < vecDiffMap.size(); i++) {
-//        // inner loops used to go thru apartment list to compare values
-//        for (int j = 0; j < a.size(); j++) {
-//            if (vecDiffMap[i].first == a[j].getName()) {
-//                a[j].addToMatchScore((i * SCORE_MULTIPLIER) * (10 * importanceCoefficient));
-//                cout << "Apartment " << a[j].getName() << " match score: " << a[j].getMatchScore() << '\n';
-//            }
-//        }
-//    }
-//
-//}
-//
-//void checkGrade(vector<Apartment> a, Parameter p, int importanceCoefficient) {
-//    cout << '\n' << "Checking grade..." << '\n';
-//
-//    // initializes map for holding differences
-//    map<string, double> differenceMap;
-//    // loops thru and adds apartment with its difference to the map
-//    for (int i = 0; i < a.size(); i++) {
-//        differenceMap.insert(pair<string, double>(a[i].getName(), abs(a[i].getGrade() - p.getParameter('g'))));
-//    }
-//
-//    // needed to be a vector type for sorting algorithm
-//    vector<pair<string, double>> vecDiffMap;
-//    map<string, double> ::iterator it2;
-//    // transfers each element of diffMap to a vector of the same contents
-//    for (it2 = differenceMap.begin(); it2 != differenceMap.end(); it2++)
-//    {
-//        vecDiffMap.push_back(make_pair(it2->first, it2->second));
-//    }
-//    // sorts the vector of differences
-//    sort(vecDiffMap.begin(), vecDiffMap.end(), sortByVal);
-//
-//    // simple display 
-//    //for (int i = 0; i < vecDiffMap.size(); i++) {
-//    //    cout << vecDiffMap[i].first << ": " << vecDiffMap[i].second << '\n';
-//    //}
-//
-//    // loops thru vecDiffMap and adds points appropriately
-//    // outer loops goes thru vecDiffMap values
-//    for (int i = 0; i < vecDiffMap.size(); i++) {
-//        // inner loops used to go thru apartment list to compare values
-//        for (int j = 0; j < a.size(); j++) {
-//            if (vecDiffMap[i].first == a[j].getName()) {
-//                a[j].addToMatchScore((i * SCORE_MULTIPLIER) * (10 * importanceCoefficient));
-//                cout << "Apartment " << a[j].getName() << " match score: " << a[j].getMatchScore() << '\n';
-//            }
-//        }
-//    }
-//}
-
-// 
 void checkParams(vector<Apartment*> &a, Parameter &p, double importanceCoefficient, char paramMarker) {
+    const double SCORE_MULTIPLIER = 1.05;
+    
     cout << '\n' << "Checking parameters..." << '\n';
 
     // initializes map for holding differences
@@ -427,32 +194,114 @@ void displayApartments(vector<Apartment*> a) {
     }
 }
 
-
+void displayBestOptions(vector<Apartment*> a) {
+    cout << '\n' << "***   Best Option   ***" << '\n';
+    
+    for (int i = 0; i < a.size(); i++) {
+        cout << i + 1 << ") " << a[i]->getName() << '\n';
+    }
+    cout << "***   Worst Option   ***" << '\n';
+}
 
 // function to accept unsorted apartment list and sort that list by match score
 void sortApartments(vector<Apartment*> &unsortedA) {
-    // write code to BUBBLE sort vector by match score here
-
-
+    sort(unsortedA.begin(), unsortedA.end(), [](Apartment* a, Apartment* b){
+        return b->getMatchScore() > a->getMatchScore(); }
+    );
 }
 
+void menuNav(vector<Apartment*>& apartments, Parameter newSpecs) {
+    // variable to store user input
+    char input;
+    do {
+        do {
+            cout << "_____________________________________________" << '\n';
+            cout << "|                                           |" << '\n';
+            cout << "|----------------Dumb Zillow----------------|" << '\n';
+            cout << "|------------------ MENU -------------------|" << '\n';
+            cout << "| Type 'Q' to quick load data               |" << '\n';
+            cout << "| Type 'D' to display all apartment options |" << '\n';
+            cout << "| Type 'U' to input search parameters       |" << '\n';
+            cout << "| Type 'S' to display search parameters     |" << '\n';
+            cout << "| Type 'M' to find potential matches        |" << '\n';
+            cout << "| Type 'E' to exit the program              |" << '\n';
+            cout << "|___________________________________________|" << '\n' << '\n';
+            cout << "PLease enter a menu option: ";
+            cin >> input;
+            // converts user input to uppercase for consistent testing
+            input = toupper(input);
+            // selects proper menu option based on user input
+            switch (input) {
+            case 'Q':
+                cout << "You selected quick load data" << '\n';
+              
+                apartments = createSampleApartments();
+                newSpecs = createDefaultParams();
+
+                break;
+            case 'D':
+                cout << "You selected show all apartment options" << '\n';
+
+                displayApartments(apartments);
+
+                break;
+            case 'U':
+                cout << "You selected input new search parameters" << '\n';
+
+                newSpecs = createCustomParams();
+
+                break;
+            case 'S':
+                cout << "You selected show search parameters" << '\n';
+
+                newSpecs.displayParameters();
+
+                break;
+            case 'M':
+                cout << "You selected find potetial matches" << '\n';
+                cout << "Searching for potential matches..." << '\n';
+
+                criteriaChecker(apartments, newSpecs);
+
+                sortApartments(apartments);
+
+                displayBestOptions(apartments);
+
+                break;
+            case 'E':
+                cout << "You selected exit" << '\n';
+                break;
+            default:
+                cout << "Please enter a valid menu option " << '\n';
+            }
+            // tests input to make sure user inputs a valid menu option
+        } while (!menuOptionCheck(input));
+        // tests input and only exits the program if user selects exit
+    } while (input != 'E');
+    cout << '\n' << "Ending program..." << '\n';
+}
+
+
 int main() {
+    vector<Apartment*> a;
+    Parameter s;
 
-//    menuNav();
+    menuNav(a, s);
 
-    vector<Apartment*> apartments = createSampleApartments();
-    Parameter newSpecs;
+  /*  vector<Apartment*> apartments = createSampleApartments();
+    Parameter newSpecs = createDefaultParams();
     newSpecs.loadDefaultParameters();
     newSpecs.loadDefaultImportanceLevel();
 
     displayApartments(apartments);
     
     newSpecs.displayParameters();
+
     cout << "_____________________________" << '\n' << '\n';
 
     criteriaChecker(apartments, newSpecs);
 
     sortApartments(apartments);
 
-    displayApartments(apartments);
+    displayBestOptions(apartments);*/
 }

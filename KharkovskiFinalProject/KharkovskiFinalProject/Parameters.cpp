@@ -20,6 +20,22 @@ private:
 
 public:
 
+	Parameter(double f,int fi, double c,int ci, double d,int di, double g, int gi)
+	{
+		paramMap.insert(pair<char, double>('f', f));
+		paramMap.insert(pair<char, double>('c', c));
+		paramMap.insert(pair<char, double>('d', d));
+		paramMap.insert(pair<char, double>('g', g));
+		importanceLevelMap.insert(pair<int, char>(fi, 'f'));
+		importanceLevelMap.insert(pair<int, char>(ci, 'c'));
+		importanceLevelMap.insert(pair<int, char>(di, 'd'));
+		importanceLevelMap.insert(pair<int, char>(gi, 'g'));
+	}
+
+	Parameter() {
+
+	}
+
 	int getImportanceMapSize() {
 		return importanceLevelMap.size();
 	}
@@ -27,8 +43,6 @@ public:
 	char getImportanceParam(int i) {
 		return importanceLevelMap.at(i);
 	};
-
-	
 
 	double getParameter(char type) {
 		return paramMap.at(type);

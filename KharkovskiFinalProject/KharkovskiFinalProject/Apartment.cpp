@@ -18,6 +18,10 @@ public:
 		distanceFromCity{ distance }, neighborhoodGrade{ grade }{
 	}
 
+	Apartment() {
+
+	}
+
 	void setMatchScore(int m) {
 		matchScore = m;
 	};
@@ -57,4 +61,5 @@ public:
 		cout << "Distance from city: " << distanceFromCity << " miles" << '\n';
 		cout << "Neighborhood Grade: " << neighborhoodGrade << '\n';
 	};
+
 };
