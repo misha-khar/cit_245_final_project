@@ -33,14 +33,12 @@ char paramTypes[4] = { 'f', 'c', 'd', 'g' };
 vector<Apartment*> createSampleApartments() {
 
     vector<Apartment*> a;
-
     a.push_back(new Apartment("alpha", 850, 1500, 15, 90));
     a.push_back(new Apartment("bravo", 900, 1500, 5, 85));
     a.push_back(new Apartment("chalie", 700, 1000, 10, 60));
     a.push_back(new Apartment("delta", 900, 1000, 20, 80));
     a.push_back(new Apartment("echo", 600, 850, 12, 95));
     a.push_back(new Apartment("foxtrot", 900, 1500, 3, 98));
-
     return a;
 }
 
